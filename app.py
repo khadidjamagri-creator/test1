@@ -11,7 +11,8 @@ model.fit(X, y)
 app = Flask(__name__)
 @app.route("/predict", methods=["POST"])
 def predict():
-    text = request.json["email"]
+    data = request.get_json()
+    text = data["email"]
     vector = vectorizer.transform([text])
     prediction = model.predict(vector)
     return jsonify({"classe": prediction[0]})
